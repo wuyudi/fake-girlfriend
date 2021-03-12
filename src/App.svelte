@@ -1,4 +1,8 @@
 <script>
+  // https://stackoverflow.com/a/56489832/13040423
+  import { writable } from "svelte/store";
+  const currentInput = writable(localStorage.getItem("currentInput") || "");
+  currentInput.subscribe((val) => localStorage.setItem("currentInput", val));
   let getTime = () => {
     // https://linuxhint.com/how_to_get_current_date_and_time_in_javascript/
     let now = new Date();
@@ -17,27 +21,16 @@
     msgList = [...msgList, { msg: getMsg(), sendTime: getTime(), from: "her" }];
     saveLog();
   }
-  let currentInput = "";
   let msgList = [];
   let girlfriendWord = ["嗯", "哦"];
-  let saveLog = () => {
-    localStorage.setItem("chatLog", JSON.stringify(msgList));
-  };
-  let loadLog = () => {
-    // https://stackoverflow.com/a/41462498/13040423
-    msgList = JSON.parse(
-      localStorage.hasOwnProperty("chatLog")
-        ? localStorage.getItem("chatLog")
-        : "[]"
-    );
-  };
+  let saveLog = () => localStorage.setItem("chatLog", JSON.stringify(msgList));
   let cleanLog = () => {
     msgList = [];
     localStorage.setItem("chatLog", JSON.stringify(msgList));
   };
-  document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", () => {
     // https://stackoverflow.com/a/10367736/13040423
-    loadLog();
+    msgList = JSON.parse(localStorage.getItem("chatLog") || "[]");
   });
 </script>
 
@@ -48,14 +41,14 @@
   <div>{msg.msg}</div>
 {/each}
 
-<input bind:value={currentInput} />
+<input bind:value={$currentInput} />
 <button
   on:click={() => {
     msgList = [
       ...msgList,
-      { msg: currentInput, sendTime: getTime(), from: "you" },
+      { msg: $currentInput, sendTime: getTime(), from: "you" },
     ];
-    currentInput = "";
+    $currentInput = "";
     saveLog();
     addGirlMsg();
   }}>send message</button
