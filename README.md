@@ -1,5 +1,5 @@
 # Fake-girlfriend
 
-灵感来源
+[灵感来源](https://t.me/jandan_pic/64970)
 
-<script async src="https://telegram.org/js/telegram-widget.js?14" data-telegram-post="jandan_pic/64970" data-width="100%"></script>
+![图片](img/photo_2020-11-16_01-39-17.jpg)
