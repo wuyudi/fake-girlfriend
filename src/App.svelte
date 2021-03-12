@@ -24,6 +24,7 @@
     localStorage.setItem("chatLog", JSON.stringify(msgList));
   };
   let loadLog = () => {
+    // https://stackoverflow.com/a/41462498/13040423
     msgList = JSON.parse(
       localStorage.hasOwnProperty("chatLog")
         ? localStorage.getItem("chatLog")
