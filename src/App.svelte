@@ -12,15 +12,15 @@
     // https://stackoverflow.com/a/5915122/13040423
     return girlfriendWord[Math.floor(Math.random() * girlfriendWord.length)];
   };
-  function sleep(ms) {
+  let sleep = (ms) => {
     // https://stackoverflow.com/a/39914235/13040423
     return new Promise((resolve) => setTimeout(resolve, ms));
-  }
-  async function addGirlMsg() {
+  };
+  let addGirlMsg = async () => {
     await sleep(Math.floor(Math.random() * 2000));
     msgList = [...msgList, { msg: getMsg(), sendTime: getTime(), from: "her" }];
     saveLog();
-  }
+  };
   let msgList = [];
   let girlfriendWord = ["嗯", "哦"];
   let saveLog = () => localStorage.setItem("chatLog", JSON.stringify(msgList));
@@ -33,6 +33,11 @@
     msgList = JSON.parse(localStorage.getItem("chatLog") || "[]");
   });
 </script>
+
+<a
+  href="https://github.com/wuyudi/fake-girlfriend"
+  style="text-decoration:none;">github repo</a
+>
 
 {#each msgList as msg}
   <div>-------------------------------------------------</div>
