@@ -24,7 +24,11 @@
     localStorage.setItem("chatLog", JSON.stringify(msgList));
   };
   let loadLog = () => {
-    msgList = JSON.parse(localStorage.getItem("chatLog"));
+    msgList = JSON.parse(
+      localStorage.hasOwnProperty("chatLog")
+        ? localStorage.getItem("chatLog")
+        : "[]"
+    );
   };
   let cleanLog = () => {
     msgList = [];
