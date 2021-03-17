@@ -38,24 +38,55 @@
   href="https://github.com/wuyudi/fake-girlfriend"
   style="text-decoration:none;">github repo</a
 >
+<div class="chat-box" id="chat-box">
+  {#each msgList as msg}
+    <p class={msg.from}>{msg.sendTime}</p>
+    <p class={msg.from}>{msg.msg}</p>
+  {/each}
+</div>
+<div>
+  <center>
+    <input bind:value={$currentInput} placeholder="hi" />
+    <button
+      on:click={() => {
+        msgList = [
+          ...msgList,
+          { msg: $currentInput || "hi", sendTime: getTime(), from: "you" },
+        ];
+        $currentInput = "";
+        saveLog();
+        addGirlMsg();
+      }}>send message</button
+    >
+    <button on:click={() => cleanLog()}>clean log</button>
+  </center>
+</div>
 
-{#each msgList as msg}
-  <div>-------------------------------------------------</div>
-  <div>send time: {msg.sendTime}</div>
-  <div>from: {msg.from}</div>
-  <div>{msg.msg}</div>
-{/each}
+<style>
+  /* https://stackoverflow.com/a/50183768/13040423 */
+  .chat-box {
+    margin: auto;
+    background-color: darkslategrey;
+    padding: 10px;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height: 600px;
+    overflow: auto; /* thanks to https://github.com/flaribbit*/
+  }
 
-<input bind:value={$currentInput} />
-<button
-  on:click={() => {
-    msgList = [
-      ...msgList,
-      { msg: $currentInput, sendTime: getTime(), from: "you" },
-    ];
-    $currentInput = "";
-    saveLog();
-    addGirlMsg();
-  }}>send message</button
->
-<button on:click={() => cleanLog()}>clean log</button>
+  .her {
+    background-color: aquamarine;
+    padding: 1px;
+  }
+
+  .you {
+    background-color: aqua;
+    align-self: flex-end;
+  }
+  .input-text {
+    margin-left: auto;
+    margin-right: auto;
+  }
+</style>
