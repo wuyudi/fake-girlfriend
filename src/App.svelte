@@ -1,4 +1,6 @@
 <script>
+  import { onMount } from "svelte";
+
   // https://stackoverflow.com/a/56489832/13040423
   import { writable } from "svelte/store";
   const currentInput = writable(localStorage.getItem("currentInput") ?? "");
@@ -20,6 +22,7 @@
     await sleep(Math.floor(Math.random() * 2000));
     msgList = [...msgList, { msg: getMsg(), sendTime: getTime(), from: "her" }];
     saveLog();
+    await roll();
   };
   let msgList = [];
   let girlfriendWord = ["嗯", "哦"];
@@ -32,6 +35,11 @@
     // https://stackoverflow.com/a/10367736/13040423
     msgList = JSON.parse(localStorage.getItem("chatLog") ?? "[]");
   });
+  let roll = async () => {
+    await new Promise((r) => setTimeout(r, 2000));
+    let element = document.getElementById("chat-box");
+    element.scrollTop = element.scrollHeight;
+  };
 </script>
 
 <svelte:head
@@ -47,7 +55,7 @@
   style="text-decoration:none;">github repo</a
 >
 
-<div class="lite-chatbox chat-box">
+<div class="lite-chatbox chat-box" id="chat-box">
   {#each msgList as msg}
     <div class={(msg.from === "her" ? "cleft" : "cright") + " cmsg"}>
       {#if msg.from === "her"}
@@ -62,6 +70,7 @@
       <span class="name">{msg.from}</span>
       <span class="content">{msg.msg} <sub><br />{msg.sendTime}</sub></span>
     </div>
+    <br /><br />
   {/each}
 </div>
 

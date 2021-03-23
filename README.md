@@ -4,8 +4,10 @@
 
 数据利用 localStorage 持久化，刷新不消失
 
+聊天框体借用 <https://github.com/MorFansLab/LiteWebChat_Frame>
+
 ## TODO
 
-- [ ] 自动向下滚动
+- [x] 自动向下滚动
 
 ![图片](img/photo_2020-11-16_01-39-17.jpg)
